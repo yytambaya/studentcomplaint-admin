@@ -4,39 +4,39 @@ import { getData, postData } from "../../services/request";
 import { validateTitle, validateText, validateEmail, validatePassword, validateNumber, validateName, validatePhoneNumber } from "../../services/validators";
 import { Notification } from '../components/Notification';
 
-const NewSlot = ({setPage, setLastPage, lastPage}) => {
+const NewComplaint = ({setPage, setLastPage, lastPage}) => {
     const [name, setName] = useState("")
     const [park, setPark] = useState("")
     const [status, setStatus] = useState(false)
-    const [action, setAction] = useState("Add slot")
+    const [action, setAction] = useState("Add complaint")
     const [error, setError] = useState([{field: "name", msg:""}, {field: "park", msg:""},  {field: "status", msg:""} ]);
     const [genError, setGenError] = useState("")
-    const [slots, setSlots] = useState([])
+    const [complaints, setComplaints] = useState([])
 
     useEffect(() => {
-        getSlots()
+        getComplaints()
     }, [])
     
-    const createSlot = async () => {
+    const createComplaint = async () => {
         //alert("Title: " + title + " Text: " + text + " Checked: " + publish);
         var accessToken = localStorage.getItem('jwt_token');
-        var slot_id = localStorage.getItem('_id');
-        var slot_name = localStorage.getItem('name');
+        var complaint_id = localStorage.getItem('_id');
+        var complaint_name = localStorage.getItem('name');
         var name_val = validateName(name).error == "" ? true: false;
         var park_val = validateName(name).error == "" ? true: false;
         var status_val = status == true || status == false ? true: false;
         var at_val = accessToken == "" || accessToken == undefined? false : true; 
-        var ui_val = slot_id == "" || slot_id == undefined? false : true; 
-        var un_val = slot_name == "" || slot_name == undefined? false : true; 
-        if(accessToken == "") setGenError("Unauthorized slot. Login again!"); 
-        if(slot_id == "") setGenError("Unauthorized slot, no id. Login again!"); 
-        if(slot_name == "")  setGenError("Unauthorized slot, no name. Login again!"); 
+        var ui_val = complaint_id == "" || complaint_id == undefined? false : true; 
+        var un_val = complaint_name == "" || complaint_name == undefined? false : true; 
+        if(accessToken == "") setGenError("Unauthorized complaint. Login again!"); 
+        if(complaint_id == "") setGenError("Unauthorized complaint, no id. Login again!"); 
+        if(complaint_name == "")  setGenError("Unauthorized complaint, no name. Login again!"); 
         setError([...error, error.find(item => item.field == "name").msg = validateName(name).result])
          
         if(name_val && park_val && status_val && at_val && ui_val && un_val){
             //alert("going")
             setAction("Loading...")
-            const url = `${getAPIBaseURL()}/v1/admin/slot/new`;
+            const url = `${getAPIBaseURL()}/v1/admin/complaint/new`;
             const api_key = '@!8(T#7<R:I#:F1#r!>BW/!';
             const headers = {'x-access-key': api_key, 'x-access-token': accessToken}
             const statusCode = status == true ? 1 : 0;
@@ -47,7 +47,7 @@ const NewSlot = ({setPage, setLastPage, lastPage}) => {
             if(request.error == "" && request.result.data?.error != "error"){
                 if(request.result.data?.error == ""){
                     
-                    setPage('Slots')
+                    setPage('Complaints')
 
                 }else{
                     setGenError(request.result.data?.result)
@@ -71,12 +71,12 @@ const NewSlot = ({setPage, setLastPage, lastPage}) => {
     }
 
 
-    const getSlots = async () => {
+    const getComplaints = async () => {
         //alert("Title: " + title + " Text: " + text + " Checked: " + publish);
         //alert(park)
         var accessToken = localStorage.getItem('jwt_token');
         var at_val = accessToken == "" || accessToken == undefined? false : true; 
-        if(accessToken == "") setGenError("Unauthorized slot. Login again!"); 
+        if(accessToken == "") setGenError("Unauthorized complaint. Login again!"); 
         
         if(at_val){
             //alert("going")
@@ -90,7 +90,7 @@ const NewSlot = ({setPage, setLastPage, lastPage}) => {
             if(request.error == ""){
                 if(request.result.data.error == ""){
                     //alert(JSON.stringify(request.result.data.result))
-                    setSlots([...slots, ...request.result.data.result])
+                    setComplaints([...complaints, ...request.result.data.result])
                     //window.location.href = `${getAPIBaseURL()}/app`
 
                 }else{
@@ -109,7 +109,7 @@ const NewSlot = ({setPage, setLastPage, lastPage}) => {
 
     return(
         <div>
-        {/*<Notification message={"A new slot is successfully created!"}/>*/}
+        {/*<Notification message={"A new complaint is successfully created!"}/>*/}
         <div class="mx-5 md:mx-20 mt-10">
             
             <div class="flex space-x-4 mb-10">
@@ -120,22 +120,22 @@ const NewSlot = ({setPage, setLastPage, lastPage}) => {
                 </svg>
             </button>
             </div>
-                <h1 class="sm:text-3xl text-2xl mb-2 text-black">Create slot</h1>
+                <h1 class="sm:text-3xl text-2xl mb-2 text-black">Create complaint</h1>
             </div>
             <div class="my-5">
                 {genError != "" ? <div class="text-red-500 text-sm font-semibold">{genError}</div> : ""}
             </div>
             <div class="mb-6">
                 <label for="name" class="block mb-2 text-xl text-black">Name</label>
-                <input onChange={(e) => setName(e.target.value)} type="text" id="name" class="text-lg outline-none focus:border-gray-400 border-2  w-full px-4 py-2" placeholder="Slot A" required=""/>
+                <input onChange={(e) => setName(e.target.value)} type="text" id="name" class="text-lg outline-none focus:border-gray-400 border-2  w-full px-4 py-2" placeholder="Complaint A" required=""/>
                 {error.find(item => item.field == "name").msg ? <p class="text-red-500 text-sm font-semibold mt-1">{error.find(item => item.field == "name").msg }</p>: null}
             </div>
             <div class="mb-6">
                 <label for="name" class="block mb-2 text-xl text-black">Select park</label>
-                <select onChange={(e) => setPark(e.target.value)} type="text" id="name" class="text-lg outline-none focus:border-gray-400 border-2  w-full px-4 py-2" placeholder="Slot A" required="">
+                <select onChange={(e) => setPark(e.target.value)} type="text" id="name" class="text-lg outline-none focus:border-gray-400 border-2  w-full px-4 py-2" placeholder="Complaint A" required="">
                     <option>Select park</option>
-                    {slots.map((slot, i) =>
-                        <option value={slot._id}>{slot.name}</option>
+                    {complaints.map((complaint, i) =>
+                        <option value={complaint._id}>{complaint.name}</option>
                     )}
                 </select>    
                 {error.find(item => item.field == "name").msg ? <p class="text-red-500 text-sm font-semibold mt-1">{error.find(item => item.field == "name").msg }</p>: null}
@@ -148,11 +148,11 @@ const NewSlot = ({setPage, setLastPage, lastPage}) => {
                 <p className=''>{status ? "active" : "inactive"}</p>
             </div>*/}
             
-            <button onClick={() => createSlot()} type="submit" class="flex text-white bg-blue-700 px-6 py-2 mb-8">{action}</button>
+            <button onClick={() => createComplaint()} type="submit" class="flex text-white bg-blue-700 px-6 py-2 mb-8">{action}</button>
         </div>
         </div>
 
     )
 }
 
-export default NewSlot
+export default NewComplaint

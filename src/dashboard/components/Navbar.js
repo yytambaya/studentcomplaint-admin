@@ -1,5 +1,5 @@
 import { getSiteBaseURL } from "../../services/helpers";
-import logo1 from '../../asset/images/logo1.svg' 
+import logo1 from '../../asset/images/afit-logo.jpg' 
 import parkPic from '../../asset/images/user.svg';
 
 export const Navbar = () => {
@@ -7,9 +7,9 @@ export const Navbar = () => {
 
 <nav class="bg-blue-500 border-gray-200 px-2 sm:px-4 py-2.5">
   <div class="container flex flex-wrap justify-between items-center mx-auto">
-  <a href={`${getSiteBaseURL()}/users`} class="flex items-center">
+  <a href={`${getSiteBaseURL()}/complaints`} class="flex items-center">
       <img src={logo1} class="mr-1 h-6 sm:h-9" alt="Flowbite Logo"/>
-      <span class="self-center text-xl font-semibold whitespace-nowrap dark:text-white">Carpark Admin</span>
+      <span class="self-center text-xl font-semibold whitespace-nowrap dark:text-white">AFIT Hostel Complaint System - Admin</span>
   </a>
   <div class="flex items-center md:order-2">
       <button onClick={() => window.location.href="/profile"} type="button" class="flex mr-3 text-sm bg-gray-800 rounded-full md:mr-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600" id="park-menu-button" aria-expanded="false" data-dropdown-toggle="park-dropdown" data-dropdown-placement="bottom">
@@ -45,17 +45,17 @@ export const Navbar = () => {
   <div class="hidden justify-between items-center w-full md:flex md:w-auto md:order-1" id="mobile-menu-2">
     <ul class="flex flex-col p-4 mt-4 bg-gray-50 rounded-lg border border-gray-100 md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium md:border-0">
       <li>
-        <a href="/parks" class="block py-2 pr-4 pl-3 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 dark:text-white" aria-current="page">Parks</a>
+        <a href="/complaints" class="block py-2 pr-4 pl-3 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 dark:text-white" aria-current="page">Complaints</a>
       </li>
       <li>
-        <a href="/slots" class="block py-2 pr-4 pl-3 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0">Slots</a>
+        <a href="/hostels" class="block py-2 pr-4 pl-3 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0">Hostels</a>
       </li>
       <li>
-        <a href="/reservations" class="block py-2 pr-4 pl-3 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0">Reservations</a>
+        <a href="/students" class="block py-2 pr-4 pl-3 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0">Students</a>
       </li>
-      <li>
-        <a href="/users" class="block py-2 pr-4 pl-3 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0">Users</a>
-      </li>
+      {/*<li>
+        <a href="/students" class="block py-2 pr-4 pl-3 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0">Not</a>
+      </li>*/}
     </ul>
   </div>
   </div>

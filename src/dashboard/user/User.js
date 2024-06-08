@@ -1,6 +1,6 @@
 import {useState, useEffect} from 'react'
 import { getAPIBaseURL } from "../../services/helpers";
-import { postData } from "../../services/request";
+import { getData, postData } from "../../services/request";
 import { validateTitle, validateText, validateEmail, validatePassword, validateNumber, validateName, validatePhoneNumber } from "../../services/validators";
 import { Notification } from '../components/Notification';
 
@@ -13,10 +13,15 @@ const User = ({setPage, setLastPage, lastPage, user}) => {
     const [publish, setPublish] = useState("0")
     const [author, setAuthor] = useState("")
     const [action, setAction] = useState("Edit")
+    const [hostelName, setHostelName] = useState("")
     const [showDeleteButton, setShowDeleteButton] = useState(false)
     const [error, setError] = useState([{field: "name", msg:""}, {field: "email", msg:""}, {field: "phoneNumber", msg: ""},{field: "password", msg:""}, {field: "status", msg:""} ]);
     const [genError, setGenError] = useState("")
     
+    useEffect(() => {
+        getHostelName(user.hostelId)
+    }, [])
+
     
     const createUser = async () => {
         //alert("Title: " + title + " Text: " + text + " Checked: " + publish);
@@ -81,7 +86,7 @@ const User = ({setPage, setLastPage, lastPage, user}) => {
         
         if(at_val){
             //alert("going")
-            const url = `${getAPIBaseURL()}/v1/admin/user/remove`;
+            const url = `${getAPIBaseURL()}/v1/admin/student/remove`;
             const api_key = '@!8(T#7<R:I#:F1#r!>BW/!';
             const headers = {'x-access-key': api_key, 'x-access-token': accessToken}
             const data = {id: user_id};
@@ -104,6 +109,43 @@ const User = ({setPage, setLastPage, lastPage, user}) => {
         }  
     }
 
+    const getHostelName = async (id) => {
+        //alert("Title: " + title + " Text: " + text + " Checked: " + publish);
+        //alert(park)
+        var accessToken = localStorage.getItem('jwt_token');
+        var at_val = accessToken == "" || accessToken == undefined? false : true; 
+        if(accessToken == "") setGenError("Unauthorized slot. Login again!"); 
+        
+        if(at_val){
+            //alert("going")
+            const url = `${getAPIBaseURL()}/v1/hostel/get`;
+            const api_key = '@!8(T#7<R:I#:F1#r!>BW/!';
+            const headers = {'x-access-key': api_key, 'x-access-token': accessToken}
+            const params = {id};
+
+            const request = await getData(url, headers, params)
+            //alert(JSON.stringify(request))
+            if(request.error == ""){
+                if(request.result.data.error == ""){
+                    //alert(JSON.stringify(request.result.data.result))
+                    //setHostels([...hostels, ...request.result.data.result])
+                    //window.location.href = `${getAPIBaseURL()}/app`
+                    //alert(request.result.data.result.name)
+                    setHostelName(request.result.data.result.name)
+
+                }else{
+                    //alert("Eror")
+                    //setGenError(request.result.data.result)
+                }
+
+            }else{
+                //setGenError("Something went wrong")
+            }
+            
+        }  
+    }
+
+
     const goToEditPage = () => {
         setPage('EditUser')
     }
@@ -113,8 +155,8 @@ const User = ({setPage, setLastPage, lastPage, user}) => {
         {/*<Notification message={"A new user is successfully created!"}/>*/}
             {showDeleteButton && <div class=" backdrop-blur-sm overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0  z-50 md:inset-0 h-modal md:h-full justify-center items-center flex" aria-modal="true" role="dialog">
                 <div className=" shadow-2xl flex flex-col fixed top-40 bg-white space-y-4 px-4 py-2 text-xl">
-                    <h1 className="text-2xl font-mono">Delete user</h1>
-                    <p className=' '>Are you sure you want to delete this user?</p>
+                    <h1 className="text-2xl font-mono">Delete student</h1>
+                    <p className=' '>Are you sure you want to delete this student?</p>
                     <div className="flex justify-between">
                         <button onClick={() => deleteUser(user._id)} type="submit" class="flex text-white bg-red-700 px-6 py-2 mb-8">{"Delete"}</button>
                         <button onClick={() => setShowDeleteButton(false)} type="" class="flex text-white bg-gray-300 px-6 py-2 mb-8">{"Cancel"}</button>
@@ -140,6 +182,14 @@ const User = ({setPage, setLastPage, lastPage, user}) => {
             <div class="mb-6">
                 <label for="name" class="block mb-2 text-xl text-black">Name</label>
                 <p className=' text-slate-500'>{user.name}</p>
+            </div>
+            <div class="mb-6">
+                <label for="name" class="block mb-2 text-xl text-black">Reg Number</label>
+                <p className=' text-slate-500'>{user.regNumber}</p>
+            </div>
+            <div class="mb-6">
+                <label for="name" class="block mb-2 text-xl text-black">Hostel</label>
+                <p className=' text-slate-500'>{hostelName}</p>
             </div>
             <div class="mb-6">
                 <label for="name" class="block mb-2 text-xl text-black">Email Address</label>

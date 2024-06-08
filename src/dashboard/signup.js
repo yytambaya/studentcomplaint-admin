@@ -78,7 +78,7 @@ const Signup = () => {
             <div class="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
             <a href="#" class="flex items-center mb-6 text-2xl font-semibold text-gray-900 ">
                 <img class="w-8 h-8 mr-2" src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/logo.svg" alt="logo"/>
-                Carpark    
+                AFIT Complaint System - Admin    
             </a>
             <div class="w-full bg-white rounded-lg shadow  md:mt-0 sm:max-w-md xl:p-0">
                 <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
@@ -113,7 +113,7 @@ const Signup = () => {
                             </div>
                             <a href="#" class="text-sm font-medium text-primary-600 hover:underline dark:text-primary-500">Forgot password?</a>
                         </div>*/}
-                        <button onClick={() => signup()} type="submit" class="w-full text-black bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center ">{btnState}</button>
+                        <button onClick={() => signup()} type="submit" class="w-full text-black bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center text-white">{btnState}</button>
                         <a className=" underline text-blue-800 tex-lg mt-12" href="/login">Login</a>
                         
                         {/*<p class="text-sm font-light text-gray-500 dark:text-gray-400">

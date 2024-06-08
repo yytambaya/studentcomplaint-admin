@@ -4,9 +4,9 @@ import { postData } from "../../services/request";
 import { validateTitle, validateText, validateEmail, validatePassword, validateNumber, validateName, validatePhoneNumber } from "../../services/validators";
 import { Notification } from '../components/Notification';
 
-const EditPark = ({setPage, setLastPage, lastPage, park}) => {
-    const [name, setName] = useState(park.name)
-    const [status, setStatus] = useState(park.status)
+const EditHostel = ({setPage, setLastPage, lastPage, hostel}) => {
+    const [name, setName] = useState(hostel.name)
+    const [status, setStatus] = useState(hostel.status)
     const [publish, setPublish] = useState("0")
     const [author, setAuthor] = useState("")
     const [action, setAction] = useState("save")
@@ -14,38 +14,38 @@ const EditPark = ({setPage, setLastPage, lastPage, park}) => {
     const [genError, setGenError] = useState("")
 
     
-    const editPark = async () => {
+    const editHostel = async () => {
         //alert("Title: " + title + " Text: " + text + " Checked: " + publish);
         var accessToken = localStorage.getItem('jwt_token');
-        var park_id = localStorage.getItem('_id');
-        var park_name = localStorage.getItem('name');
+        var hostel_id = localStorage.getItem('_id');
+        var hostel_name = localStorage.getItem('name');
         var name_val = validateName(name).error == "" ? true: false;
         //var password_val = validatePassword(password).error == "" ? true: false;
         var status_val = status == true || status == false ? true: false;
         var at_val = accessToken == "" || accessToken == undefined? false : true; 
-        var ui_val = park_id == "" || park_id == undefined? false : true; 
-        var un_val = park_name == "" || park_name == undefined? false : true; 
-        if(accessToken == "") setGenError("Unauthorized park. Login again!"); 
-        if(park_id == "") setGenError("Unauthorized park, no id. Login again!"); 
-        if(park_name == "")  setGenError("Unauthorized park, no name. Login again!"); 
+        var ui_val = hostel_id == "" || hostel_id == undefined? false : true; 
+        var un_val = hostel_name == "" || hostel_name == undefined? false : true; 
+        if(accessToken == "") setGenError("Unauthorized hostel. Login again!"); 
+        if(hostel_id == "") setGenError("Unauthorized hostel, no id. Login again!"); 
+        if(hostel_name == "")  setGenError("Unauthorized hostel, no name. Login again!"); 
         setError([...error, error.find(item => item.field == "name").msg = validateName(name).result])
         //setError([...error, error.find(item => item.field == "password").msg = validatePassword(password).result])
          
         if(name_val && status_val && at_val && ui_val && un_val){
             //alert("going")
             setAction("Loading...")
-            const url = `${getAPIBaseURL()}/v1/admin/park/edit`;
+            const url = `${getAPIBaseURL()}/v1/admin/hostel/edit`;
             const api_key = '@!8(T#7<R:I#:F1#r!>BW/!';
             const headers = {'x-access-key': api_key, 'x-access-token': accessToken}
             const statusCode = status == true ? 1 : 0;
-            const data = {name, status: statusCode, id: park._id};
+            const data = {name, status: statusCode, id: hostel._id};
 
             const request = await postData(url, headers, data)
             //alert(JSON.stringify(request))
             if(request.error == "" && request.result.data?.error != "error"){
                 if(request.result.data?.error == ""){
                     
-                    setPage('Park')
+                    setPage('Hostel')
 
                 }else{
                     setGenError(request.result.data?.result)
@@ -70,7 +70,7 @@ const EditPark = ({setPage, setLastPage, lastPage, park}) => {
 
     return(
         <div>
-        {/*<Notification message={"A new park is successfully created!"}/>*/}
+        {/*<Notification message={"A new hostel is successfully created!"}/>*/}
         <div class="mx-5 md:mx-20 mt-10">
             
             <div class="flex space-x-4 mb-10">
@@ -81,7 +81,7 @@ const EditPark = ({setPage, setLastPage, lastPage, park}) => {
                 </svg>
             </button>
             </div>
-                <h1 class="sm:text-3xl text-2xl mb-2 text-black">Edit park</h1>
+                <h1 class="sm:text-3xl text-2xl mb-2 text-black">Edit hostel</h1>
             </div>
             <div class="my-5">
                 {genError != "" ? <div class="text-red-500 text-sm font-semibold">{genError}</div> : ""}
@@ -99,11 +99,11 @@ const EditPark = ({setPage, setLastPage, lastPage, park}) => {
                 <p className=''>{status ? "active" : "inactive"}</p>
             </div>
             
-            <button onClick={() => editPark()} type="submit" class="flex text-white bg-blue-700 px-6 py-2 mb-8">{action}</button>
+            <button onClick={() => editHostel()} type="submit" class="flex text-white bg-blue-700 px-6 py-2 mb-8">{action}</button>
         </div>
         </div>
 
     )
 }
 
-export default EditPark
+export default EditHostel

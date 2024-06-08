@@ -3,9 +3,9 @@ import { getAPIBaseURL } from "../../services/helpers";
 import { getData } from "../../services/request";
 import { validateTitle, validateText } from "../../services/validators";
 
-const Parks = ({setPage, setLastPage, setPark}) => {
+const Hostels = ({setPage, setLastPage, setHostel}) => {
     const [lits, setLits] = useState([]);
-    const [parks, setParks] = useState([])
+    const [hostels, setHostels] = useState([])
     const [title, setTitle] = useState("")
     const [text, setText] = useState("")
     const [publish, setPublish] = useState("0")
@@ -18,7 +18,7 @@ const Parks = ({setPage, setLastPage, setPark}) => {
     const [genError, setGenError] = useState("")
 
     useEffect( () => {
-        getParks()
+        getHostels()
     }, [skip])
 
     window.onscroll = (e) => handleScroll(e);
@@ -38,15 +38,15 @@ const Parks = ({setPage, setLastPage, setPark}) => {
   
 
 
-    const getParks = async () => {
+    const getHostels = async () => {
         //alert("Title: " + title + " Text: " + text + " Checked: " + publish);
         var accessToken = localStorage.getItem('jwt_token');
         var at_val = accessToken == "" || accessToken == undefined? false : true; 
-        if(accessToken == "") setGenError("Unauthorized park. Login again!"); 
+        if(accessToken == "") setGenError("Unauthorized hostel. Login again!"); 
         
         if(at_val){
             //alert("going")
-            const url = `${getAPIBaseURL()}/v1/admin/park/getall`;
+            const url = `${getAPIBaseURL()}/v1/admin/hostel/getall`;
             const api_key = '@!8(T#7<R:I#:F1#r!>BW/!';
             const headers = {'x-access-key': api_key, 'x-access-token': accessToken}
             const params = {limit:limit , skip:skip};
@@ -60,7 +60,7 @@ const Parks = ({setPage, setLastPage, setPark}) => {
                         setPageEnd(true)
                         setBottomLoading(false)
                     }else{
-                        setParks([...lits, ...request.result.data.result])
+                        setHostels([...lits, ...request.result.data.result])
                     }
                     //window.location.href = `${getAPIBaseURL()}/app`
 
@@ -76,10 +76,10 @@ const Parks = ({setPage, setLastPage, setPark}) => {
         }  
     }
 
-    const changePage = (park) => {
-        setPark(park)
-        setPage("Park")
-        setLastPage("Parks")
+    const changePage = (hostel) => {
+        setHostel(hostel)
+        setPage("Hostel")
+        setLastPage("Hostels")
     }
 
 
@@ -87,10 +87,10 @@ const Parks = ({setPage, setLastPage, setPark}) => {
         <section class="md:mx-12 text-gray-600 body-font">
         <div class="container px-5 py-10 mx-auto">
           <div class="flex flex-wrap w-full mb-10 justify-between text-center">
-            <h1 class="sm:text-3xl text-2xl font-medium title-font mb-2 text-gray-900">Parks</h1>
-            <button onClick={() => setPage("NewPark")} type="button" class="text-white bg-blue-500 hover:bg-blue-500/90 focus:ring-4 focus:outline-none font-medium text-sm px-4 py-2 text-center inline-flex items-center mr-2 mb-2">
+            <h1 class="sm:text-3xl text-2xl font-medium title-font mb-2 text-gray-900">Hostels</h1>
+            <button onClick={() => setPage("NewHostel")} type="button" class="text-white bg-blue-500 hover:bg-blue-500/90 focus:ring-4 focus:outline-none font-medium text-sm px-4 py-2 text-center inline-flex items-center mr-2 mb-2">
             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path></svg>
-                New park
+                New hostel
             </button>
           </div>
           <div class="flex flex-wrap -m-4">
@@ -103,12 +103,12 @@ const Parks = ({setPage, setLastPage, setPark}) => {
                             <td>Status</td>
                         </thead>
                         <tbody className=' text-lg'>
-                            {parks.map((park, i) => 
-                            <tr key={i} onClick={() => changePage(park)} className='cursor-pointer'>
-                                <td>{park.name}</td>
-                                <td>{park.email}</td>
-                                <td>{park.phoneNumber}</td>
-                                <td>{park.status == 1 ? "active" : "inactive"}</td>
+                            {hostels.map((hostel, i) => 
+                            <tr key={i} onClick={() => changePage(hostel)} className='cursor-pointer'>
+                                <td>{hostel.name}</td>
+                                <td>{hostel.email}</td>
+                                <td>{hostel.phoneNumber}</td>
+                                <td>{hostel.status == 1 ? "active" : "inactive"}</td>
                             </tr>
                             )}
                         </tbody>
@@ -128,13 +128,13 @@ const Parks = ({setPage, setLastPage, setPark}) => {
             </tr>
         </thead>
         <tbody>
-            {parks.map((park, i) =>             
-            <tr key={i} onClick={() => changePage(park)} class="bg-white border-b cursor-pointer">
+            {hostels.map((hostel, i) =>             
+            <tr key={i} onClick={() => changePage(hostel)} class="bg-white border-b cursor-pointer">
                 <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
-                    {park.name}
+                    {hostel.name}
                 </th>
                 <td class="px-6 py-4">
-                    {park.status ? "active" : "inactive"}
+                    {hostel.status ? "active" : "inactive"}
                 </td>
             </tr>
                 )}
@@ -151,4 +151,4 @@ const Parks = ({setPage, setLastPage, setPark}) => {
     )
 }
 
-export default Parks;
+export default Hostels;

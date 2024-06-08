@@ -4,44 +4,44 @@ import { postData } from "../../services/request";
 import { validateTitle, validateText, validateEmail, validatePassword, validateNumber, validateName, validatePhoneNumber } from "../../services/validators";
 import { Notification } from '../components/Notification';
 
-const NewPark = ({setPage, setLastPage, lastPage}) => {
+const NewHostel = ({setPage, setLastPage, lastPage}) => {
     const [name, setName] = useState("")
     const [status, setStatus] = useState(false)
-    const [action, setAction] = useState("Add park")
+    const [action, setAction] = useState("Add hostel")
     const [error, setError] = useState([{field: "name", msg:""}, {field: "status", msg:""} ]);
     const [genError, setGenError] = useState("")
 
     
-    const createPark = async () => {
+    const createHostel = async () => {
         //alert("Title: " + title + " Text: " + text + " Checked: " + publish);
         var accessToken = localStorage.getItem('jwt_token');
-        var park_id = localStorage.getItem('_id');
-        var park_name = localStorage.getItem('name');
+        var hostel_id = localStorage.getItem('_id');
+        var hostel_name = localStorage.getItem('name');
         var name_val = validateName(name).error == "" ? true: false;
         var status_val = status == true || status == false ? true: false;
         var at_val = accessToken == "" || accessToken == undefined? false : true; 
-        var ui_val = park_id == "" || park_id == undefined? false : true; 
-        var un_val = park_name == "" || park_name == undefined? false : true; 
-        if(accessToken == "") setGenError("Unauthorized park. Login again!"); 
-        if(park_id == "") setGenError("Unauthorized park, no id. Login again!"); 
-        if(park_name == "")  setGenError("Unauthorized park, no name. Login again!"); 
+        var ui_val = hostel_id == "" || hostel_id == undefined? false : true; 
+        var un_val = hostel_name == "" || hostel_name == undefined? false : true; 
+        if(accessToken == "") setGenError("Unauthorized hostel. Login again!"); 
+        if(hostel_id == "") setGenError("Unauthorized hostel, no id. Login again!"); 
+        if(hostel_name == "")  setGenError("Unauthorized hostel, no name. Login again!"); 
         setError([...error, error.find(item => item.field == "name").msg = validateName(name).result])
          
         if(name_val && status_val && at_val && ui_val && un_val){
             //alert("going")
             setAction("Loading...")
-            const url = `${getAPIBaseURL()}/v1/admin/park/new`;
+            const url = `${getAPIBaseURL()}/v1/admin/hostel/new`;
             const api_key = '@!8(T#7<R:I#:F1#r!>BW/!';
             const headers = {'x-access-key': api_key, 'x-access-token': accessToken}
             const statusCode = status == true ? 1 : 0;
             const data = {name, status: statusCode};
 
             const request = await postData(url, headers, data)
-            //alert(JSON.stringify(request))
+            alert(JSON.stringify(request))
             if(request.error == "" && request.result.data?.error != "error"){
                 if(request.result.data?.error == ""){
                     
-                    setPage('Parks')
+                    setPage('Hostels')
 
                 }else{
                     setGenError(request.result.data?.result)
@@ -52,6 +52,7 @@ const NewPark = ({setPage, setLastPage, lastPage}) => {
                  if(request.result.data?.status == 409){
                     setGenError(request.result.data?.result)
                 }else{
+
                     setGenError("check your form for errors")
                 }
                 
@@ -66,7 +67,7 @@ const NewPark = ({setPage, setLastPage, lastPage}) => {
 
     return(
         <div>
-        {/*<Notification message={"A new park is successfully created!"}/>*/}
+        {/*<Notification message={"A new hostel is successfully created!"}/>*/}
         <div class="mx-5 md:mx-20 mt-10">
             
             <div class="flex space-x-4 mb-10">
@@ -77,14 +78,14 @@ const NewPark = ({setPage, setLastPage, lastPage}) => {
                 </svg>
             </button>
             </div>
-                <h1 class="sm:text-3xl text-2xl mb-2 text-black">Create park</h1>
+                <h1 class="sm:text-3xl text-2xl mb-2 text-black">Create hostel</h1>
             </div>
             <div class="my-5">
                 {genError != "" ? <div class="text-red-500 text-sm font-semibold">{genError}</div> : ""}
             </div>
             <div class="mb-6">
                 <label for="name" class="block mb-2 text-xl text-black">Name</label>
-                <input onChange={(e) => setName(e.target.value)} type="text" id="name" class="text-lg outline-none focus:border-gray-400 border-2  w-full px-4 py-2" placeholder="Park A" required=""/>
+                <input onChange={(e) => setName(e.target.value)} type="text" id="name" class="text-lg outline-none focus:border-gray-400 border-2  w-full px-4 py-2" placeholder="Hostel A" required=""/>
                 {error.find(item => item.field == "name").msg ? <p class="text-red-500 text-sm font-semibold mt-1">{error.find(item => item.field == "name").msg }</p>: null}
             </div>
             <div class="flex items-center space-x-4">
@@ -95,11 +96,11 @@ const NewPark = ({setPage, setLastPage, lastPage}) => {
                 <p className=''>{status ? "active" : "inactive"}</p>
             </div>
             
-            <button onClick={() => createPark()} type="submit" class="flex text-white bg-blue-700 px-6 py-2 mb-8">{action}</button>
+            <button onClick={() => createHostel()} type="submit" class="flex text-white bg-blue-700 px-6 py-2 mb-8">{action}</button>
         </div>
         </div>
 
     )
 }
 
-export default NewPark
+export default NewHostel

@@ -94,6 +94,7 @@ export const validateTitle = (title) => {
     return res;
 };
 
+
 export const validateText = (text) => {
     //name = req.body.name;
     var res = {error:"error", result:"Unknown"};
@@ -124,6 +125,22 @@ export const validateDescription = (desc) => {
       res = {error: "", result: ""};
   }
   return res;
+};
+
+export const validateRequiredDescription = (title) => {
+    //name = req.body.name;
+    var res = {error:"error", result:"Unknown"};
+    if(title != "" && title != undefined){
+        if(reg_desc.test(title)){
+            res = {error:"", result:""};;
+            
+        }else{
+            res = {error: "error", result: "invalid reply"};    
+        }
+    }else{
+        res = {error: "error", result: "reply is empty"};
+    }
+    return res;
 };
 
 export const validateLink = (link) => {

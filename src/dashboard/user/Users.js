@@ -46,7 +46,7 @@ const Users = ({setPage, setLastPage, setUser}) => {
         
         if(at_val){
             //alert("going")
-            const url = `${getAPIBaseURL()}/v1/admin/user/getall`;
+            const url = `${getAPIBaseURL()}/v1/admin/student/getall`;
             const api_key = '@!8(T#7<R:I#:F1#r!>BW/!';
             const headers = {'x-access-key': api_key, 'x-access-token': accessToken}
             const params = {limit:limit , skip:skip};
@@ -87,10 +87,10 @@ const Users = ({setPage, setLastPage, setUser}) => {
         <section class="md:mx-12 text-gray-600 body-font">
         <div class="container px-5 py-10 mx-auto">
           <div class="flex flex-wrap w-full mb-10 justify-between text-center">
-            <h1 class="sm:text-3xl text-2xl font-medium title-font mb-2 text-gray-900">Users</h1>
+            <h1 class="sm:text-3xl text-2xl font-medium title-font mb-2 text-gray-900">Student</h1>
             <button onClick={() => setPage("NewUser")} type="button" class="text-white bg-blue-500 hover:bg-blue-500/90 focus:ring-4 focus:outline-none font-medium text-sm px-4 py-2 text-center inline-flex items-center mr-2 mb-2">
             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path></svg>
-                New user
+                New Student
             </button>
           </div>
           <div class="flex flex-wrap -m-4">
@@ -123,6 +123,12 @@ const Users = ({setPage, setLastPage, setUser}) => {
                     Name
                 </th>
                 <th scope="col" class="px-6 py-3">
+                    Reg Number
+                </th>
+                {/*<th scope="col" class="px-6 py-3">
+                    Hostel
+                </th>*/}
+                <th scope="col" class="px-6 py-3">
                     Email
                 </th>
                 <th scope="col" class="px-6 py-3">
@@ -139,6 +145,12 @@ const Users = ({setPage, setLastPage, setUser}) => {
                 <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
                     {user.name}
                 </th>
+                <td class="px-6 py-4">
+                       {user.regNumber} 
+                </td>
+                {/*<td class="px-6 py-4">
+                    {user.hostelId}
+                </td>*/}
                 <td class="px-6 py-4">
                        {user.email} 
                 </td>
