@@ -14,6 +14,7 @@ const User = ({setPage, setLastPage, lastPage, user}) => {
     const [author, setAuthor] = useState("")
     const [action, setAction] = useState("Edit")
     const [hostelName, setHostelName] = useState("")
+    const [roomNumber, setRoomNumber] = useState("")
     const [showDeleteButton, setShowDeleteButton] = useState(false)
     const [error, setError] = useState([{field: "name", msg:""}, {field: "email", msg:""}, {field: "phoneNumber", msg: ""},{field: "password", msg:""}, {field: "status", msg:""} ]);
     const [genError, setGenError] = useState("")
@@ -189,7 +190,7 @@ const User = ({setPage, setLastPage, lastPage, user}) => {
             </div>
             <div class="mb-6">
                 <label for="name" class="block mb-2 text-xl text-black">Hostel</label>
-                <p className=' text-slate-500'>{hostelName}</p>
+                <p className=' text-slate-500'>{user?.roomNumber != undefined ?  user.roomNumber + ", " + hostelName: hostelName}</p>
             </div>
             <div class="mb-6">
                 <label for="name" class="block mb-2 text-xl text-black">Email Address</label>

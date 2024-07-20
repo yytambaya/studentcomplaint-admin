@@ -8,6 +8,7 @@ const EditUser = ({setPage, setLastPage, lastPage, user}) => {
     const [name, setName] = useState(user.name)
     const [email, setEmail] = useState(user.email)
     const [regNumber, setRegNumber] = useState(user?.regNumber)
+    const [roomNumber, setRoomNumber] = useState(user?.roomNumber)
     const [hostelId, setHostelId] = useState(user?.hostelId)
     const [phoneNumber, setPhoneNumber] = useState(user.phoneNumber)
     const [status, setStatus] = useState(user.status)
@@ -15,7 +16,7 @@ const EditUser = ({setPage, setLastPage, lastPage, user}) => {
     const [publish, setPublish] = useState("0")
     const [author, setAuthor] = useState("")
     const [action, setAction] = useState("save")
-    const [error, setError] = useState([{field: "name", msg:""}, {field: "email", msg:""}, {field: "regNumber", msg:""}, {field: "hostelId", msg:""}, {field: "phoneNumber", msg: ""}, {field: "status", msg:""} ]);
+    const [error, setError] = useState([{field: "name", msg:""}, {field: "email", msg:""}, {field: "regNumber", msg:""}, {field: "roomNumber", msg:""}, {field: "hostelId", msg:""}, {field: "phoneNumber", msg: ""}, {field: "status", msg:""} ]);
     const [genError, setGenError] = useState("")
 
     useEffect(() => {
@@ -56,10 +57,10 @@ const EditUser = ({setPage, setLastPage, lastPage, user}) => {
             const api_key = '@!8(T#7<R:I#:F1#r!>BW/!';
             const headers = {'x-access-key': api_key, 'x-access-token': accessToken}
             const statusCode = status == true ? 1 : 0;
-            const data = {name, email, phoneNumber, regNumber, hostelId, status: statusCode, id: user._id};
+            const data = {name, email, phoneNumber, regNumber, roomNumber, hostelId, status: statusCode, id: user._id};
 
             const request = await postData(url, headers, data)
-            //alert(JSON.stringify(request))
+            alert(JSON.stringify(request))
             if(request.error == "" && request.result.data?.error != "error"){
                 if(request.result.data?.error == ""){
                     
@@ -166,6 +167,11 @@ const EditUser = ({setPage, setLastPage, lastPage, user}) => {
                     )}
                 </select>    
                 {error.find(item => item.field == "hostelId").msg ? <p class="text-red-500 text-sm font-semibold mt-1">{error.find(item => item.field == "hostelId").msg }</p>: null}
+            </div>
+            <div class="mb-6">
+                <label for="email" class="block mb-2 text-xl text-black">Room Number</label>
+                <input onChange={(e) => setRoomNumber(e.target.value)} value={roomNumber} type="text" id="name" class="text-lg outline-none focus:border-gray-400 border-2  w-full px-4 py-2" placeholder="A24" required=""/>
+                {error.find(item => item.field == "roomNumber").msg ? <p class="text-red-500 text-sm font-semibold mt-1">{error.find(item => item.field == "roomNumber").msg }</p>: null}
             </div>
             <div class="flex items-center space-x-4">
                 <label for="status" class="block mb-2 text-xl text-black">Status</label>
