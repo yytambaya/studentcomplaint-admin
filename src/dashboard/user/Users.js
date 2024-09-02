@@ -1,7 +1,7 @@
 import {useState, useEffect} from 'react'
 import { getAPIBaseURL } from "../../services/helpers";
 import { getData } from "../../services/request";
-import { validateTitle, validateText } from "../../services/validators";
+import { validateText } from "../../services/validators";
 
 const Users = ({setPage, setLastPage, setUser}) => {
     const [lits, setLits] = useState([]);
