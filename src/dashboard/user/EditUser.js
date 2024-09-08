@@ -60,7 +60,7 @@ const EditUser = ({setPage, setLastPage, lastPage, user}) => {
             const data = {name, email, phoneNumber, regNumber, roomNumber, hostelId, status: statusCode, id: user._id};
 
             const request = await postData(url, headers, data)
-            alert(JSON.stringify(request))
+            //alert(JSON.stringify(request))
             if(request.error == "" && request.result.data?.error != "error"){
                 if(request.result.data?.error == ""){
                     

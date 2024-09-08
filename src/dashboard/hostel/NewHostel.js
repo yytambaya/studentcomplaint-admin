@@ -37,7 +37,7 @@ const NewHostel = ({setPage, setLastPage, lastPage}) => {
             const data = {name, status: statusCode};
 
             const request = await postData(url, headers, data)
-            alert(JSON.stringify(request))
+            //alert(JSON.stringify(request))
             if(request.error == "" && request.result.data?.error != "error"){
                 if(request.result.data?.error == ""){
                     
@@ -53,7 +53,7 @@ const NewHostel = ({setPage, setLastPage, lastPage}) => {
                     setGenError(request.result.data?.result)
                 }else{
 
-                    setGenError("check your form for errors")
+                    setGenError(request.result.data?.result)
                 }
                 
             }
